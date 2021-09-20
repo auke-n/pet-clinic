@@ -16,24 +16,38 @@ swapon  /swapfile
 echo "/swapfile   swap    swap    sw  0   0" >> /etc/fstab
 mount -a
 
-# Git installation
-yum install git -y
+#Install Ansible
 
-# Jenkins installation
-wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-yum install jenkins -y
-systemctl daemon-reload
+amazon-linux-extras install ansible2
 
-chown jenkins:jenkins -R /var/lib/jenkins
+#Install Ansible roles: java, jenkins, docker, pip, git
 
+#ansible-galaxy install geerlingguy.jenkins
+ansible-galaxy install geerlingguy.java
+# ansible-galaxy install geerlingguy.pip
+# ansible-galaxy install geerlingguy.docker
+ansible-galaxy install geerlingguy.git
+
+echo "---
+- hosts: localhost
+  become: true
+  vars:
+    java_packages:
+       - java-1.8.0-openjdk
+  roles:
+    - role: geerlingguy.java
+    - role: geerlingguy.git" > site.yml
+
+#Run playbook
+ansible-playbook site.yml
+
+#Add jenkins user
+
+sudo useradd -d /var/lib/jenkins jenkins
 echo "jenkins ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
-
-systemctl daemon-reload
-systemctl start jenkins
-systemctl enable jenkins
 
 # Docker installation
 amazon-linux-extras install docker -y
+usermod -a -G docker jenkins
 systemctl start docker
 systemctl enable docker
