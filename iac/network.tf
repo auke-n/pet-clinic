@@ -17,9 +17,9 @@ resource "aws_internet_gateway" "petclinic-igw" {
 }
 
 resource "aws_route" "default" {
-  route_table_id = aws_route_table.petclinic-rt.id
+  route_table_id         = aws_route_table.petclinic-rt.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id = aws_internet_gateway.petclinic-igw.id
+  gateway_id             = aws_internet_gateway.petclinic-igw.id
 }
 
 resource "aws_subnet" "subnet_build" {
