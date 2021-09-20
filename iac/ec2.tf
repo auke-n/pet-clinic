@@ -24,7 +24,7 @@ resource "aws_instance" "build-server" {
   vpc_security_group_ids = [aws_security_group.build-server-sg.id]
   associate_public_ip_address = true
   iam_instance_profile = aws_iam_instance_profile.ec2-profile.name
-/*  user_data = file("config/user_data_build.sh")*/
+  user_data = file("config/user_data_build.sh")
 
   tags = {
     Name = "build-server"
