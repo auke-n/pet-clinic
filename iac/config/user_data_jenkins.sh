@@ -22,7 +22,7 @@ ansible-galaxy install geerlingguy.jenkins
 ansible-galaxy install geerlingguy.java
 #ansible-galaxy install geerlingguy.pip
 #ansible-galaxy install geerlingguy.docker
-#ansible-galaxy install geerlingguy.git
+ansible-galaxy install geerlingguy.git
 
 echo "---
 - hosts: localhost
@@ -32,7 +32,8 @@ echo "---
        - java-1.8.0-openjdk
   roles:
     - role: geerlingguy.java
-    - role: geerlingguy.jenkins" > site.yml
+    - role: geerlingguy.jenkins
+    - role: geerlingguy.git" > site.yml
 
 sed -i 's/\[\]/\[ace-editor, ant, antisamy-markup-formatter, ant, apache-httpcomponents-client-4-api, bootstrap4-api, bootstrap5-api, bouncycastle-api, branch-api, build-timeout, caffeine-api, checks-api, cloudbees-folder, command-launcher, credentials, credentials-binding, credentials, display-url-api, durable-task, echarts-api, email-ext, font-awesome-api, git, git-client, github, github-api, github-branch-source, github, git, git-server, gradle, handlebars, jackson2-api, jdk-tool, jjwt-api, jquery3-api, jsch, junit, ldap, locale, lockable-resources, mailer, matrix-auth, matrix-project, momentjs, okhttp-api, pam-auth, pipeline-build-step, pipeline-github-lib, pipeline-graph-analysis, pipeline-input-step, pipeline-milestone-step, pipeline-model-api, pipeline-model-definition, pipeline-model-extensions, pipeline-rest-api, pipeline-stage-step, pipeline-stage-tags-metadata, pipeline-stage-view, plain-credentials, plugin-util-api, popper2-api, popper-api, resource-disposer, scm-api, script-security, snakeyaml-api, ssh-credentials, sshd, ssh-slaves, structs, timestamper, token-macro, trilead-api, workflow-aggregator, workflow-api, workflow-basic-steps, workflow-cps, workflow-cps-global-lib, workflow-cps, workflow-durable-task-step, workflow-job, workflow-multibranch, workflow-scm-step, workflow-step-api, workflow-support, ws-cleanup\]/' /root/.ansible/roles/geerlingguy.jenkins/defaults/main.yml
 
