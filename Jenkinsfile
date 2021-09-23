@@ -61,9 +61,9 @@ pipeline {
             steps {
                 echo '=== Run application on production-server ==='
 
-                sh 'ssh -i ~/.ssh/jenkins.prv -o StrictHostKeyChecking=no ec2-user@10.0.1.232 "sudo docker rm -f web;"'
+                sh 'ssh -i ~/.ssh/jenkins.prv -o StrictHostKeyChecking=no ec2-user@10.0.1.155 "sudo docker rm -f web;"'
                 sh 'sleep 30'
-                sh 'ssh -i ~/.ssh/jenkins.prv -o StrictHostKeyChecking=no ec2-user@10.0.1.232 "sudo docker run -d --name web -p 80:8080 gerbut/pet-clinic:latest;"'
+                sh 'ssh -i ~/.ssh/jenkins.prv -o StrictHostKeyChecking=no ec2-user@10.0.1.155 "sudo docker run -d --name web -p 80:8080 gerbut/pet-clinic:latest;"'
                 }
             }
         }
