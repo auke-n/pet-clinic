@@ -53,6 +53,22 @@ pipeline {
             }
         }
 
+        stage('Test Image') {
+            steps {
+                echo '=== Run container on build_server ==='
+
+                sh 'sudo docker run -d --name web -p 80:8080 gerbut/pet-clinic:latest'
+                sh "http_code=$(curl -LI http://localhost:80 -o /dev/null -w '%{http_code}\n' -s)
+                    if [ ${http_code} -eq 200 ];
+                    then
+                        echo '======Test: Passed!====='
+                    fi"
+
+                sh 'sudo docker stop $(docker ps -a -q)'
+                sh 'docker rm $(docker ps -a -q)'
+            }
+        }
+
         stage('Remove Docker Images from the build_server') {
             steps {
                 echo '=== Remove docker images from the build_server ==='
