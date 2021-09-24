@@ -64,7 +64,6 @@ pipeline {
                 sh 'ssh -i ~/.ssh/jenkins.prv -o StrictHostKeyChecking=no ec2-user@10.0.1.155 "sudo docker rm -f web;"'
                 sh 'ssh -i ~/.ssh/jenkins.prv -o StrictHostKeyChecking=no ec2-user@10.0.1.155 "sudo docker run -d --name web -p 80:8080 gerbut/pet-clinic:latest;"'
                 sh 'sleep 30'
-                }
             }
         }
 
@@ -78,8 +77,8 @@ pipeline {
                 echo '=== Remove docker images from the build_server ==='
 
                 sh 'sudo docker image prune -a -f'
-
-                }
             }
         }
+    }
+}
     
