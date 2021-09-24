@@ -67,4 +67,19 @@ pipeline {
                 }
             }
         }
+
+        stage('Remove Docker Images from the build_server') {
+
+            agent {
+                    label 'build_server'
+            }
+
+            steps {
+                echo '=== Remove docker images from the build_server ==='
+
+                sh 'sudo docker image prune -a -f'
+
+                }
+            }
+        }
     }
