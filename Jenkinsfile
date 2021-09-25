@@ -88,9 +88,6 @@ pipeline {
 
                 docker rm -f web >>/dev/null
                 echo "Container is removed!"'''
-
-                sh 'sudo docker stop $(docker ps -a -q)'
-                sh 'sudo docker rm $(docker ps -a -q)'
             }
         }
 
