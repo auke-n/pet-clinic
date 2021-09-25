@@ -57,16 +57,21 @@ pipeline {
             steps {
                 echo '=== Run container on build_server ==='
 
-                sh 'sudo docker run -d --name web -p 80:8080 gerbut/pet-clinic:latest'
                 sh '''#!/bin/bash
-                    http_code=$(curl -LI http://localhost:80 -o /dev/null -w '%{http_code}\n' -s)
-                    if [ ${http_code} -eq 200 ];
-                    then
-                        echo "======Test: Passed!====="
-                    fi'''
+                      docker stop $(docker ps -a -q)
+                      docker rm $(docker ps -a -q)
+                      sleep 10
+                      docker run -d --name web -p 80:8080 gerbut/pet-clinic:latest
+                      sleep 20
+                      response_code=$(curl --retry 5 --retry-delay 5 --connect-timeout 5 --max-time 5 -LI http://localhost:80 -o /dev/null -w '%{http_code}\n' -s)
+                      if [ ${response_code} -eq 200 ]; then
+                              sleep 20
+                                      echo "Response code is: ${response_code}"
+                                      echo '======Test Passed!===='
+                      fi'''
 
                 sh 'sudo docker stop $(docker ps -a -q)'
-                sh 'docker rm $(docker ps -a -q)'
+                sh 'sudo docker rm $(docker ps -a -q)'
             }
         }
 
