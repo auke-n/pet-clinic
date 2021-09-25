@@ -58,17 +58,36 @@ pipeline {
                 echo '=== Run container on build_server ==='
 
                 sh '''#!/bin/bash
-                      docker stop $(docker ps -a -q)
-                      docker rm $(docker ps -a -q)
-                      sleep 10
-                      docker run -d --name web -p 80:8080 gerbut/pet-clinic:latest
-                      sleep 20
-                      response_code=$(curl --retry 5 --retry-delay 5 --connect-timeout 5 --max-time 5 -LI http://localhost:80 -o /dev/null -w '%{http_code}\n' -s)
-                      if [ ${response_code} -eq 200 ]; then
-                              sleep 20
-                                      echo "Response code is: ${response_code}"
-                                      echo '======Test Passed!===='
-                      fi'''
+                echo "Starting container..."
+                echo "------------"
+                docker run -d --name web -p 80:8080 gerbut/pet-clinic:latest
+                echo "------------"
+                echo "Container is started"
+                echo "------------"
+                echo "Testing site availablity..."
+                echo "------------"
+
+                COUNTER=0
+                while [  $COUNTER -lt 40 ]; do
+                        response_code=$(curl --connect-timeout 5 -LI http://127.0.0.1 -o /dev/null -w '%{http_code}\n' -s )
+                        if [ ${response_code} -eq 200 ]; then
+                               break
+                        fi
+                        let COUNTER=COUNTER+1
+                                printf "\rAttempt: ${COUNTER} (Response code: ${response_code})"
+                                        sleep 1
+                done
+                echo ""
+                if [ ${response_code} -eq 200 ]; then
+                        echo '======= Test Passed! ======'
+                        echo "Attempt # : $COUNTER"
+                else
+                        echo "======= Test Failed! ======"
+                        echo "Response code: ${response_code}"
+                fi
+
+                docker rm -f web >>/dev/null
+                echo "Container is removed!"'''
 
                 sh 'sudo docker stop $(docker ps -a -q)'
                 sh 'sudo docker rm $(docker ps -a -q)'
