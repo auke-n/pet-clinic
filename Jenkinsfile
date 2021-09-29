@@ -40,19 +40,6 @@ pipeline {
             }
         }
 
-        stage('Push Image to Docker Registry') {
-            steps {
-                echo '=== Push Image to Docker Registry ==='
-
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                    sh 'docker logout'
-                    sh "sudo docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
-                    sh "sudo docker push docker.io/gerbut/pet-clinic:1.${BUILD_NUMBER}"
-                    sh "sudo docker push docker.io/gerbut/pet-clinic:latest"
-                }
-            }
-        }
-
         stage('Test Image') {
             steps {
                 echo '=== Run container on build_server ==='
@@ -74,24 +61,42 @@ pipeline {
                                break
                         fi
                         let COUNTER=COUNTER+1
-                                printf "\rAttempt: ${COUNTER} (Response code: ${response_code})"
-                                        sleep 1
+                        sleep 1
                 done
                 echo ""
+                
+                docker rm -f web >>/dev/null
+                echo "Container is removed!"
+                
                 if [ ${response_code} -eq 200 ]; then
                         echo '======= Test Passed! ======'
                         echo "Attempt # : $COUNTER"
+                        exit 0
                 else
                         echo "======= Test Failed! ======"
                         echo "Response code: ${response_code}"
+                        echo "Attempt # : $COUNTER"
                         exit 1
                 fi
 
-                docker rm -f web >>/dev/null
-                echo "Container is removed!"
                 '''
             }
         }
+        
+        
+        stage('Push Image to Docker Registry') {
+            steps {
+                echo '=== Push Image to Docker Registry ==='
+
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                    sh 'docker logout'
+                    sh "sudo docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
+                    sh "sudo docker push docker.io/gerbut/pet-clinic:1.${BUILD_NUMBER}"
+                    sh "sudo docker push docker.io/gerbut/pet-clinic:latest"
+                }
+            }
+        }
+       
 
         stage('Remove Docker Images from the build_server') {
             steps {
