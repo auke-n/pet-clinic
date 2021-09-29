@@ -84,10 +84,12 @@ pipeline {
                 else
                         echo "======= Test Failed! ======"
                         echo "Response code: ${response_code}"
+                        exit 1
                 fi
 
                 docker rm -f web >>/dev/null
-                echo "Container is removed!"'''
+                echo "Container is removed!"
+                '''
             }
         }
 
