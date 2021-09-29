@@ -55,7 +55,7 @@ pipeline {
                 echo "------------"
 
                 COUNTER=0
-                while [  $COUNTER -lt 10 ]; do
+                while [  $COUNTER -lt 300 ]; do
                         response_code=$(curl --connect-timeout 5 -LI http://127.0.0.1 -o /dev/null -w '%{http_code}\n' -s )
                         if [ ${response_code} -eq 200 ]; then
                                break
