@@ -33,8 +33,11 @@ resource "aws_iam_policy" "policy" {
     "Statement": [
         {
               "Effect": "Allow",
+              "Principal": {
+                "AWS": "arn:aws:iam::122317880364:user/borys"
+              },
               "Action": "s3:*",
-              "Resource": "*"
+              "Resource": "arn:aws:s3:::petclinic01"
           },
         {
             "Effect": "Allow",

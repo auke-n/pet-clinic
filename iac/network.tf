@@ -32,13 +32,13 @@ resource "aws_subnet" "subnet_build" {
   }
 }
 
-resource "aws_subnet" "subnet_prod" {
+resource "aws_subnet" "subnet_web" {
   cidr_block        = "10.0.1.0/24"
   vpc_id            = aws_vpc.petclinic.id
   availability_zone = "eu-central-1b"
 
   tags = {
-    Name = "subnet-prod"
+    Name = "subnet_web"
   }
 }
 
@@ -56,6 +56,6 @@ resource "aws_route_table_association" "a" {
 }
 
 resource "aws_route_table_association" "b" {
-  subnet_id      = aws_subnet.subnet_prod.id
+  subnet_id      = aws_subnet.subnet_web.id
   route_table_id = aws_route_table.petclinic-rt.id
 }

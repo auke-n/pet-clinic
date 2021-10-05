@@ -1,12 +1,12 @@
-resource "aws_security_group" "jenkins-server-sg" {
-  name   = "jenkins-server-sg"
+resource "aws_security_group" "root-server-sg" {
+  name   = "root-server-sg"
   vpc_id = aws_vpc.petclinic.id
 
   ingress {
     from_port       = 8080
     protocol        = "tcp"
     to_port         = 8080
-    security_groups = [aws_security_group.jenkins-elb-sg.id]
+    security_groups = [aws_security_group.root-elb-sg.id]
   }
   egress {
     from_port   = 0
@@ -16,12 +16,12 @@ resource "aws_security_group" "jenkins-server-sg" {
   }
 
   tags = {
-    Name = "jenkins-sever-sg"
+    Name = "root-sever-sg"
   }
 }
 
-resource "aws_security_group" "jenkins-elb-sg" {
-  name   = "jenkins-elb-sg"
+resource "aws_security_group" "root-elb-sg" {
+  name   = "root-elb-sg"
   vpc_id = aws_vpc.petclinic.id
   ingress {
     from_port   = 443
@@ -37,7 +37,7 @@ resource "aws_security_group" "jenkins-elb-sg" {
   }
 
   tags = {
-    Name = "jenkins-elb-sg"
+    Name = "root-elb-sg"
   }
 }
 
@@ -54,7 +54,7 @@ resource "aws_security_group" "web-server-sg" {
     from_port       = 22
     protocol        = "tcp"
     to_port         = 22
-    security_groups = [aws_security_group.jenkins-server-sg.id]
+    security_groups = [aws_security_group.root-server-sg.id]
   }
   egress {
     from_port   = 0
@@ -96,7 +96,7 @@ resource "aws_security_group" "build-server-sg" {
     from_port       = 22
     protocol        = "tcp"
     to_port         = 22
-    security_groups = [aws_security_group.jenkins-server-sg.id]
+    security_groups = [aws_security_group.root-server-sg.id]
   }
   egress {
     from_port   = 0

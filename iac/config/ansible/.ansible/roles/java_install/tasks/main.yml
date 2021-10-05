@@ -1,0 +1,44 @@
+---
+# tasks file for java_install
+- name: Update all packages
+  yum:
+     name: '*'
+     state: latest
+     update_only: yes
+
+- name: Ensure a list of yum packages are installed
+  yum: 
+     name: "{{ packages }}"
+     state: latest
+     update_cache: yes
+  vars:
+     packages:
+         - amazon-linux-extras
+        
+- name: Add extras repository
+  shell: yum-config-manager --enable extras
+
+- name: Enable Some packages from amazon-linux-extras packages
+  shell: "amazon-linux-extras enable corretto8"
+
+- name: Clean yum metadata cache
+  command: yum clean metadata
+  args:
+     warn: false
+
+ 
+- name: Install java-1.8.0 (centos) via amazon-linux-extras packages
+  yum:
+     name: java-1.8.0-amazon-corretto-devel
+     state: latest
+
+ 
+- name: Ensure a list of packages are installed
+  yum:
+     name: "{{ packages }}"
+     state: latest
+     update_cache: yes
+  vars:
+      packages:
+      - java
+

@@ -1,0 +1,26 @@
+---
+# tasks file for git_install
+- name: Update all packages
+  yum:
+     name: '*'
+     state: latest
+     update_only: yes
+
+- name: Ensure a list of yum packages are installed
+  yum: 
+     name: "{{ packages }}"
+     state: latest
+     update_cache: yes
+  vars:
+     packages:
+         - git
+        
+- name: Clean yum metadata cache
+  command: yum clean metadata
+  args:
+     warn: false
+
+- name: Install git (centos) via amazon-linux-extras packages
+  yum:
+     name: git
+     state: latest
