@@ -12,43 +12,40 @@ swapon  /swapfile
 echo "/swapfile   swap    swap    sw  0   0" >> /etc/fstab
 mount -a
 
-#Install Ansible
+# Add hosts records
+echo "${build_ip} build.server" >> /etc/hosts
+echo "${test_ip} test.server" >> /etc/hosts
+echo "${web_ip} web.server" >> /etc/hosts
 
+#Install Ansible
 amazon-linux-extras install ansible2
 
+aws s3 cp s3://petclinic01/config/ansible/hosts /etc/ansible/
+
 #Copy ansible roles
-
-aws s3 cp s3://petclinic01/.ansible /root/.ansible --recursive
-
-#Configure Ansible inventory
-
-echo "[root-server]
-jenkins.iplatinum.pro
-
-[build-server]
-#ip address of the build-server
-
-[test-server]
-#ip address of the test-server
-
-[web-server]
-petclinic.iplatinum.pro" >> /etc/ansible/hosts
+aws s3 cp s3://petclinic01/ansible.tar.gz /home/ec2-user/
+cd /home/ec2-user && tar -xzvf ansible.tar.gz .ansible
 
 #Install git, java, jenkins, docker on servers
-
-cd /root/.ansible
+cd .ansible
 ansible-playbook site.yml
 
-
 #Restore jenkins directory from backup
+aws s3 cp s3://petclinic01/jenkins.tar.gz .
+tar -xzvf jenkins.tar.gz /
 
-aws s3 cp s3://petclinic01/jenkins /var/lib/jenkins --recursive
-
-
-#echo "10.1.1.155  prod-srv" >> /etc/hosts
-
-#aws s3 cp s3://bucketname/config/site.yml .
-
-#Run playbook
-
-
+##########################################
+Server command prompt customization     #
+##########################################
+# PS1
+echo '' >> /etc/bashrc
+echo '# Command prompt customization - $PS1' >> /etc/bashrc
+echo 'if [ "`id -u`" -eq 0 ]; then' >> /etc/bashrc
+echo '    PS1="\[$(tput bold)\]\[\033[38;5;9m\]\u\[$(tput sgr0)\]\[\033[38;5;11m\]@\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;10m\]manager\[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;11m\]:\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;6m\]\w\[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;11m\]\\$\[$(tput sgr0)\] "' >> /etc/bashrc
+echo 'else' >> /etc/bashrc
+echo '    PS1="\u\[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;11m\]@\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;10m\]manager\[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;11m\]:\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;6m\]\w\[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;11m\]\\$\[$(tput sgr0)\] "' >> /etc/bashrc
+echo 'fi' >> /etc/bashrc
+# Handy aliases
+echo 'alias ..="cd .."' >> /etc/bashrc
+echo 'alias ..2="cd ../.."' >> /etc/bashrc
+echo 'alias ..3="cd ../../.."' >> /etc/bashrc

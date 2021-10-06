@@ -30,6 +30,7 @@ pipeline {
         }
 
         stage('Build Docker Image') {
+
             steps {
                 echo '=== Building Petclinic Docker Image ==='
                 dir('app-src') {
@@ -39,6 +40,11 @@ pipeline {
         }
 
         stage('Test Image') {
+
+        agent {
+             label 'test_server'
+            }
+
             steps {
                 echo '=== Run container on build_server ==='
                 dir('iac/config/')
@@ -47,7 +53,6 @@ pipeline {
                 sh './test.sh'
             }
         }
-
 
 
         stage('Push Image to Docker Registry') {

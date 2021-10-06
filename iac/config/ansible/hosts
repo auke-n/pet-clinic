@@ -1,0 +1,11 @@
+[root-server]
+localhost
+
+[build-server]
+build.server
+
+[test-server]
+test.server
+
+[web-server]
+web.server
