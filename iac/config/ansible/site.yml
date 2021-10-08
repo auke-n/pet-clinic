@@ -1,5 +1,5 @@
 ---
-- hosts: root-server
+- hosts: localhost
   become: true
   roles:
       - role: git_install
