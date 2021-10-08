@@ -13,7 +13,6 @@ echo "/swapfile   swap    swap    sw  0   0" >> /etc/fstab
 mount -a
 
 #Add jenkins user
-
 sudo useradd -d /var/lib/jenkins jenkins
 echo "jenkins ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
 

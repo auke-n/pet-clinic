@@ -35,7 +35,7 @@ aws s3 cp s3://petclinic01/jenkins.tar.gz .
 tar -xzvf jenkins.tar.gz /
 
 ##########################################
-Server command prompt customization     #
+#Server command prompt customization     #
 ##########################################
 # PS1
 echo '' >> /etc/bashrc
