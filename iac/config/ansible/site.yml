@@ -2,16 +2,13 @@
 - hosts: localhost
   become: true
   roles:
-      - role: git_install
       - role: java_install
       - role: jenkins_install
-
 
 - hosts: build-server
   become: true
   roles:
       - role: docker_install
-
 
 - hosts: test-server
   become: true
