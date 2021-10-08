@@ -1,9 +1,11 @@
+/*
 resource "aws_s3_bucket_object" "ans_inv" {
   bucket  = "petclinic01"
   key     = "config/ansible/hosts"
   source = "config/ansible/hosts"
   etag = filemd5("config/ansible/hosts")
 }
+*/
 
 
 
