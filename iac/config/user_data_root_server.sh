@@ -1,6 +1,7 @@
 #!/bin/bash -xe
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 echo 'alias ulog="tail -f /var/log/user-data.log"' >> /etc/bashrc
+
 # PS1
 echo '' >> /etc/bashrc
 echo '# Command prompt customization - $PS1' >> /etc/bashrc
@@ -37,6 +38,8 @@ git clone https://github.com/auke-n/pet-clinic.git
 cd ./pet-clinic/iac/config/ansible
 cp -r .ansible/roles/* /etc/ansible/roles/
 cp -f hosts /etc/ansible/
+echo "${prv_key}" > /root/.ssh/id_rsa
+chmod 400 /root/.ssh/id_rsa
 ansible-playbook -i hosts site.yml
 
 # aws s3 cp s3://petclinic01/config/ansible/hosts /etc/ansible/
