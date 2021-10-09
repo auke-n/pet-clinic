@@ -16,7 +16,6 @@ amazon-linux-extras install epel -y
 yum update -y
 yum install git -y
 
-
 #Create a SWAP-file
 # dd if=/dev/zero of=/swapfile count=2048 bs=1MiB
 # chmod 600 /swapfile
@@ -38,30 +37,14 @@ git clone https://github.com/auke-n/pet-clinic.git
 cd ./pet-clinic/iac/config/ansible
 cp -r .ansible/roles/* /etc/ansible/roles/
 cp -f hosts /etc/ansible/
-echo "${prv_key}" > /root/.ssh/id_rsa
-chmod 400 /root/.ssh/id_rsa
+cp -f ansible.cfg /etc/ansible/
+echo "${prv_key}" > /etc/ansible/aws.pem
+chmod 400 /etc/ansible/aws.pem
+#chmod 400 /home/ec2-user/.ssh/id_rsa
+#chown ec2-user:ec2-user /home/ec2-user/.ssh/id_rsa
+
 ansible-playbook -i hosts site.yml
-
-# aws s3 cp s3://petclinic01/config/ansible/hosts /etc/ansible/
-
-#Copy ansible roles
-# aws s3 cp s3://petclinic01/ansible.tar.gz /home/ec2-user/
-# cd /home/ec2-user && tar -xzvf ansible.tar.gz .ansible
-
-#Install git, java, jenkins, docker on servers
-#cd .ansible
-#ansible-playbook site.yml
 
 #Restore jenkins directory from backup
 #aws s3 cp s3://petclinic01/jenkins.tar.gz .
 #tar -xzvf jenkins.tar.gz /
-
-##########################################
-#Server command prompt customization     #
-##########################################
-
-# Handy aliases
-
-echo 'alias ..="cd .."' >> /etc/bashrc
-echo 'alias ..2="cd ../.."' >> /etc/bashrc
-echo 'alias ..3="cd ../../.."' >> /etc/bashrc
