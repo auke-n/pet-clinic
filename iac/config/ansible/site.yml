@@ -2,8 +2,8 @@
 - hosts: localhost
   become: true
   roles:
-      #- role: java_install
-      #- role: jenkins_install
+      - role: java_install
+      - role: jenkins_install
 
 - hosts: build-server
   become: true
