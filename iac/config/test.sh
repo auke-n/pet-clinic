@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Starting container..."
 echo "------------"
-docker run -d --name web -p 80:8080 gerbut/pet-clinic:latest
+sudo docker run -d --name web -p 80:8080 gerbut/pet-clinic:latest
 echo "------------"
 echo "Container is started"
 echo "------------"
@@ -19,7 +19,7 @@ while [  $COUNTER -lt 300 ]; do
 done
 
 echo ""
-docker rm -f web >>/dev/null
+sudo docker rm -f web >>/dev/null
 echo "Container is removed!"
 
 if [ ${response_code} -eq 200 ]; then
@@ -33,5 +33,5 @@ else
     exit 1
 fi
 
-docker rm -f web >>/dev/null
+sudo docker rm -f web >>/dev/null
 echo "Container is removed!"
