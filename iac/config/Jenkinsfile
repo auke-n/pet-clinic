@@ -42,7 +42,7 @@ pipeline {
         stage('Test Image') {
 
         agent {
-             label 'test_server'
+             label 'QA'
             }
 
             steps {
