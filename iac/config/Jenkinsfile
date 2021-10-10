@@ -19,8 +19,7 @@ pipeline {
                 git branch: 'main', credentialsId: 'da74d16f-289d-4d8b-9a60-b9a41ac207ce', url: 'git@github.com:auke-n/pet-clinic.git'
             }
         }
-
-        stage('Build artifact') {
+stage('Build artifact') {
             steps {
                 dir('app-src') {
                     echo '=== Building Petclinic Application ==='
@@ -55,23 +54,26 @@ pipeline {
             }
         }
 
-
         stage('Push Image to Docker Registry') {
+
+        agent {
+                label 'build_server'
+            }
+
             steps {
                 echo '=== Push Image to Docker Registry ==='
 
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+               withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                     sh 'docker logout'
-                    sh "sudo docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
+                    sh "sudo docker login -u ${USERNAME} -p ${PASSWORD}"
                     sh "sudo docker push docker.io/gerbut/pet-clinic:1.${BUILD_NUMBER}"
                     sh "sudo docker push docker.io/gerbut/pet-clinic:latest"
                 }
             }
         }
 
-
         stage('Remove Docker Images from the build_server') {
-            steps {
+           steps {
                 echo '=== Remove docker images from the build_server ==='
                 sh "sudo docker image prune -a -f"
             }
@@ -79,7 +81,9 @@ pipeline {
 
         stage('Deploy to Production') {
 
-            agent any
+        agent {
+                label 'Master'
+            }
 
             steps {
                 echo '=== Run application on production-server ==='
