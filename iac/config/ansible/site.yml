@@ -9,11 +9,13 @@
   become: true
   roles:
       - role: docker_install
+      - role: java_install
 
 - hosts: test-server
   become: true
   roles:
       - role: docker_install
+      - role: java_install
 
 - hosts: web-server
   become: true
