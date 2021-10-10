@@ -16,7 +16,7 @@ pipeline {
         stage('Clone Repository') {
         // Get some code from a GitHub repository
             steps {
-                git branch: 'main', url: 'git@github.com:auke-n/pet-clinic.git', credentialsId: 'github'
+                git branch: 'main', url: 'git@github.com:auke-n/pet-clinic.git', credentialsId: 'jenkins'
             }
         }
 
