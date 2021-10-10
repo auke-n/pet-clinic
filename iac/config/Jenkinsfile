@@ -46,11 +46,12 @@ pipeline {
             }
 
             steps {
-                echo '=== Run container on build_server ==='
-                dir('iac/config/')
-
+                echo '=== Run container on QA_server ==='
+                git branch: 'main', credentialsId: 'da74d16f-289d-4d8b-9a60-b9a41ac207ce', url: 'git@github.com:auke-n/pet-clinic.git'
+                dir('iac/config/') {
                 sh 'chmod +x test.sh'
                 sh './test.sh'
+                }
             }
         }
 
