@@ -19,7 +19,7 @@ pipeline {
                 git branch: 'main', credentialsId: 'da74d16f-289d-4d8b-9a60-b9a41ac207ce', url: 'git@github.com:auke-n/pet-clinic.git'
             }
         }
-stage('Build artifact') {
+        stage('Build artifact') {
             steps {
                 dir('app-src') {
                     echo '=== Building Petclinic Application ==='
@@ -46,8 +46,7 @@ stage('Build artifact') {
 
             steps {
                 echo '=== Run container on QA_server ==='
-                git branch: 'main', credentialsId: 'da74d16f-289d-4d8b-9a60-b9a41ac207ce', url: 'git@github.com:auke-n/pet-clinic.git'
-                dir('iac/config/') {
+                dir('/var/lib/jenkins/workspace/petclinic-pipeline/iac/config') {
                 sh 'chmod +x test.sh'
                 sh './test.sh'
                 }
