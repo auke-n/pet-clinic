@@ -11,14 +11,14 @@
 
 - Install AWS CLI
 - Open terminal (linux/mac)/command prompt(windows)
-- Run *aws configure*
-- Provide the *access key, secret key* and *region* as requested
+- Run `*aws configure*`
+- Provide the `*access key, secret key*` and `*region*` as requested
 - Unzip downloaded terraform file
 - Add terraform executable file to your environment variable (Optional)
-- In working directory create file *connection.tf* to configure provider
-- In working directory create file *backend.tf* to configure S3 bucket to store terraform.tfstate file
-- Run *terraform init* command
-- Run *terraform apply* command. Provide yes as input when asked and hit enter
+- In working directory create file `*connection.tf*` to configure provider
+- In working directory create file `*backend.tf*` to configure S3 bucket to store terraform.tfstate file
+- Run `*terraform init*` command
+- Run `*terraform apply*` command. Provide yes as input when asked and hit enter
 
 2. **Terraform Infrastructure:**
 
