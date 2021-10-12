@@ -110,3 +110,23 @@ resource "aws_security_group" "build-server-sg" {
   }
 }
 
+resource "aws_security_group" "test-server-sg" {
+  name   = "test-server-sg"
+  vpc_id = aws_vpc.petclinic.id
+  ingress {
+    from_port       = 22
+    protocol        = "tcp"
+    to_port         = 22
+    security_groups = [aws_security_group.root-server-sg.id]
+  }
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "test-server-sg"
+  }
+}
