@@ -30,4 +30,4 @@
 - Application Load Balancer
 - Route53 for DNS records and ACM for SSL certificate
 
-![AWS (2)](https://user-images.githubusercontent.com/43706100/136904212-c66734a3-06a6-42e1-b840-675932d06500.png)
+![image-20211013102420169](C:\Users\Borys\AppData\Roaming\Typora\typora-user-images\image-20211013102420169.png)
