@@ -30,4 +30,5 @@
 - Application Load Balancer
 - Route53 for DNS records and ACM for SSL certificate
 
-![AWS (2)](https://user-images.githubusercontent.com/43706100/136904212-c66734a3-06a6-42e1-b840-675932d06500.png)
+![AWS (2) (3) (3)](https://user-images.githubusercontent.com/43706100/137086974-c7a14836-d186-409f-9698-d37b982f2782.png)
+
