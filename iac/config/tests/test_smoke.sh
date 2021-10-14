@@ -18,8 +18,6 @@ while [  $COUNTER -lt 300 ]; do
       sleep 1
 done
 
-echo ""
-
 sudo docker rm -f web >>/dev/null
 echo "Container is removed!"
 
