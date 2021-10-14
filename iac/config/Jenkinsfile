@@ -49,16 +49,14 @@ pipeline {
                 dir('/var/lib/jenkins/workspace/petclinic-pipeline/iac/config/tests') {
                 sh 'chmod +x test_smoke.sh'
                 sh './test_smoke.sh'
-                }
-            }
 
-            steps {
                 echo '=== Run regression tests on QA_server ==='
                 dir('/var/lib/jenkins/workspace/petclinic-pipeline/iac/config/tests') {
                 sh 'chmod +x test_regression.sh'
                 sh './test_regression.sh'
                 }
             }
+
         }
 
         stage('Push Image to Docker Registry') {

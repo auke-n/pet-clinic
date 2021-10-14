@@ -46,7 +46,7 @@ page_test "Vets page" "vets.html" 'Henry Stevens'
 test_vets=$?
 
 sudo docker rm -f web >>/dev/null
- echo "Container is removed!"
+echo "Container is removed!"
 
 result=$(( $test_main + $test_search + $test_davis + $test_vets ))
 
