@@ -5,7 +5,8 @@
 [![Build Status](https://jenkins.iplatinum.pro/buildStatus/icon?job=petclinic)](https://jenkins.iplatinum.pro/job/petclinic/)
 
 
-![CI-CD (1) (2)](https://user-images.githubusercontent.com/43706100/137087072-5a600c80-a32c-48ad-8112-3ff44fa8c6c1.png)
+![CI-CD (1) (2) (1)](https://user-images.githubusercontent.com/43706100/137439072-b4d20dd2-a7e5-4464-9dea-33d1bf468155.png)
+
 
 
 
