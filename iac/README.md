@@ -31,6 +31,7 @@
 - Route53 for DNS records and ACM for SSL certificate
 
 
-![image-20211013102420169](C:\Users\Borys\AppData\Roaming\Typora\typora-user-images\image-20211013102420169.png)
+![AWS (2) (3) (3)](https://user-images.githubusercontent.com/43706100/137550031-2b6c4902-b298-4de3-a9ee-7b99764f294e.png)
+
 
 
